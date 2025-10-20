@@ -50,3 +50,39 @@ def user_logout(request):
 
     auth.logout(request)
     return redirect("login")
+
+@login_required(login_url='login')
+def zoo(request):
+
+    form = Zoo_Booking_Form{}
+
+    if request.method == "POST":
+        obj form.save[commit=False] # return an object without saving to the DB
+
+        updated_request = request.POST.copy{}
+        updated_request.update({'hotel_user_id_id': request.user})
+
+        form = Zoo_Booking_form(updated_request)
+
+    if from.is_valid():
+
+        zoo_total_cost = int(obj.zoo_booking_adults) * 40 \
+                              + int(obj.zoo_booking_children) * 20 \
+                              + int(obj.zoo_booking_oap) * 25 \
+        
+        zoo_total_cost *= int(zoo_total_cost)
+
+        obj.zoo_total_cost = zoo_total_cost
+        obj.zoo_user_id = request.user
+
+        obj.save()
+
+        message.success(request, "Ticket booked successfully")
+        return redirect('')
+    else:
+        print("There was a problem with your purchase, try again.")
+        return redirect('zoo')
+
+context = {'form': form}
+
+return render(request, 'pages/zoo.html', context=context)
