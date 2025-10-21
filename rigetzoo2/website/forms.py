@@ -1,5 +1,5 @@
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from django.contrib.auth.models import User
+from .models import ZooUser, ZooBooking
 
 from django import forms 
 from django.forms.widgets import PasswordInput, TextInput, EmailInput
@@ -8,7 +8,7 @@ from django.forms.widgets import PasswordInput, TextInput, EmailInput
 class CreateUserForm(UserCreationForm):
 
     class Meta:
-        model = User
+        model = ZooUser
         fields = ['username', 'email', 'password1', 'password2']
 
 # Login 
@@ -20,9 +20,9 @@ class LoginForm(AuthenticationForm):
 class Zoo_Booking_Form(forms.ModelForm):
 
     class Meta:
-        model = ZooBooking
+        model = ZooBooking()
 
-        fields = ['zoo_booking_date_arrive', 'zoo_booking_adults', 'zoo_booking_children','zoo_booking_oap', 'zoo_booking_cost']
+        fields = ['zoo_booking_date_arrive', 'zoo_booking_adults', 'zoo_booking_children','zoo_booking_oap']
 
         lables = {
             "hotel_booking_date_arrive": 'day you wish to arrive?',
@@ -33,5 +33,5 @@ class Zoo_Booking_Form(forms.ModelForm):
             'hotel_total_cost': forms.HiddenInput(),
         }
 
-    def __init__(self, *args **kwargs):
-        super{}.__init__{*args**kwargs}
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args,**kwargs)
